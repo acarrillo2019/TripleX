@@ -23,8 +23,23 @@ int main()
     std::cout << CodeSum << std::endl;
     std::cout << CodeProduct << std::endl;
 
-    int PlayerGuess;
+    int GuessA, GuessB, GuessC;
+    std::cin >> GuessA;
+    std::cin >> GuessB;
+    std::cin >> GuessC;
 
+    int GuessSum = GuessA + GuessB + GuessC;
+    int GuessProduct = GuessA * GuessB * GuessC;
+
+    if (GuessSum == CodeSum && GuessProduct == CodeProduct) 
+    {
+        std::cout << "You win!";
+    }
+    else
+    {
+        std::cout << "You lose!";
+    }
+    
 
     return 0;
 }
