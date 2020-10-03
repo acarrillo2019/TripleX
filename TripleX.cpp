@@ -1,20 +1,21 @@
 #include <iostream>
+#include <ctime>
 
-void PrintIntroduction()
+void PrintIntroduction(int Difficulty)
 {
     // Print Intro messages to terminal
-    std::cout << "\n\n You're a secret agent breaking into a secure server room...\n";
-    std::cout << "Enter the correct code to continue...\n\n";
+    std::cout << "\n\n You're a secret agent breaking into a level " << Difficulty;
+    std::cout << " secure server room...\nEnter the correct code to continue...\n\n";
 }
 
-bool PlayGame()
+bool PlayGame(int Difficulty)
 {
-    PrintIntroduction();
+    PrintIntroduction(Difficulty);
 
     // Declare 3 number code
-    const int CodeA = 4;
-    const int CodeB = 3;
-    const int CodeC = 2;
+    const int CodeA = rand() % Difficulty + Difficulty;
+    const int CodeB = rand() % Difficulty + Difficulty;
+    const int CodeC = rand() % Difficulty + Difficulty;
 
     const int CodeSum = CodeA + CodeB + CodeC;
     const int CodeProduct = CodeA * CodeB * CodeC;
@@ -25,7 +26,7 @@ bool PlayGame()
     std::cout << "\n+ The codes add up to: " << CodeSum;
     std::cout << "\n+ The codes multiply to give: " << CodeProduct << std::endl;
 
-    // Store Plaer Guess
+    // Store Player Guess
     int GuessA, GuessB, GuessC;
     std::cin >> GuessA >> GuessB >> GuessC;
 
@@ -35,12 +36,12 @@ bool PlayGame()
     // Check if the player's guess is correct
     if (GuessSum == CodeSum && GuessProduct == CodeProduct) 
     {
-        std::cout << "\n You win!";
+        std::cout << "\n*** Well done agent! You have extracted a file! Keep going! ***";
         return true;
     }
     else
     {
-        std::cout << "\n You lose!";
+        std::cout << "\n*** You entered the wrong code! Try again! ***";
         return false;
     }
 }
@@ -48,13 +49,24 @@ bool PlayGame()
 
 int main()
 {
+    srand(time(NULL)); // Creates new random sequence based on time of day
     
-    while(true)
+    int LevelDifficulty = 1;
+    const int MaxDifficulty = 5;
+
+    while (LevelDifficulty <= MaxDifficulty) // Loop game until all levels completed
     {
-        bool bLevelComplete = PlayGame();
-        std::cin.clear(); //Clears any errors
-        std::cin.ignore(); //Discards the buffer
+        bool bLevelComplete = PlayGame(LevelDifficulty);
+        std::cin.clear(); // Clears any errors
+        std::cin.ignore(); // Discards the buffer
+
+        if (bLevelComplete)
+        {
+            ++LevelDifficulty;
+        }
+        
     }
+    std::cout << "\n*** Great work agent! You got all the files! Now get out of there! ***\n";
 
     return 0;
 }
